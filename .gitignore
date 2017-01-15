@@ -1,0 +1,7 @@
+# node & npm
+node_modules
+*.log
+
+# OS
+Thumbs.db
+*.DS_Store

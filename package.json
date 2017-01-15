@@ -1,0 +1,40 @@
+{
+  "name": "solvespace",
+  "version": "0.1.0-pre",
+  "description": "Port (attempt) of SolveSpace https://github.com/solvespace/solvespace",
+  "main": "lib/index.js",
+  "scripts": {
+    "test:lint": "eslint --ext .js ./",
+    "test:unit": "mocha \"test/unit/**/*.spec.js\"",
+    "test:functional": "mocha \"test/functional/**/*.spec.js\"",
+    "test": "npm run test:lint && npm run test:unit && npm run test:functional"
+  },
+  "author": "pixnbits",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "debug": "^2.6.0",
+    "is-alphabetical": "^1.0.0",
+    "is-number": "^3.0.0",
+    "is-punctuation": "^0.2.0",
+    "is-upper-case": "^1.1.2",
+    "is-whitespace-character": "^1.0.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PixnBits/node-solvespace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PixnBits/node-solvespace/issues"
+  },
+  "homepage": "https://github.com/PixnBits/node-solvespace#readme"
+}
