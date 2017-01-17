@@ -64,9 +64,9 @@ describe('Expression', () => {
     });
     it('sin', () => {
       const expr180 = new Expression('sin(180)');
-      expect(expr180.eval()).to.equal(0);
+      expect(expr180.eval()).to.be.closeTo(0, 1e-15);
       const expr90 = new Expression('sin(90)');
-      expect(expr90.eval()).to.equal(1);
+      expect(expr90.eval()).to.be.closeTo(1, 1e-15);
     });
     it('cos', () => {
       const expr = new Expression('cos(180)');
