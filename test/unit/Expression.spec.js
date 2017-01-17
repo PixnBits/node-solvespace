@@ -70,7 +70,7 @@ describe('Expression', () => {
     });
     it('cos', () => {
       const expr = new Expression('cos(180)');
-      expect(expr.eval()).to.equal(1);
+      expect(expr.eval()).to.equal(-1);
     });
     it('asin', () => {
       const expr = new Expression('asin(1)');
