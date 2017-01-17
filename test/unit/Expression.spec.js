@@ -102,7 +102,8 @@ describe('Expression', () => {
   describe('variable', () => {
     it('parse', () => {
       const expr = new Expression('Var');
-      expect(expr.op).to.equal('variable');
+      expect(expr.operator).to.equal('variable');
+      // TODO: should Var show up anywhere??
     });
   });
   describe('parse errors', () => {
