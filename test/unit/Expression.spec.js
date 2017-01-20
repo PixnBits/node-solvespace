@@ -123,7 +123,7 @@ describe('Expression', () => {
       expect(() => new Expression('2 + +')).to.throw('Expected an operand');
     });
     it('missing parentheses', () => {
-      expect(() => new Expression('( 2 + 2)')).to.throw('Expected ")"');
+      expect(() => new Expression('( 2 + 2')).to.throw('Expected ")"');
     });
   });
 });

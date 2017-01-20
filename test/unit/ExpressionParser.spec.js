@@ -279,25 +279,25 @@ describe('ExpressionParser', () => {
   });
 
   describe('reduce', () => {
-    it('returns false if no operand', () => {
+    it('throws if no operand', () => {
       const expr = new ExpressionParser();
       expr.stack.unshift(new Token({ type: 'unary', operator: 'sqrt' }));
-      expect(expr.reduce()).to.equal(false);
+      expect(() => expr.reduce()).to.throw('Expected an operand');
     });
-    it('returns false if no operator after operand', () => {
+    it('throws if no operator after operand', () => {
       const expr = new ExpressionParser();
       expr.stack.unshift(new Token({ type: 'operand', operator: 'constant', value: Math.PI }));
       expr.stack.unshift(new Token({ type: 'operand', operator: 'constant', value: Math.PI }));
-      expect(expr.reduce()).to.equal(false);
+      expect(() => expr.reduce()).to.throw('Expected an operator');
     });
     describe('binary operand', () => {
-      it("returns false if there's not another operand", () => {
+      it("throws if there's not another operand", () => {
         const expr = new ExpressionParser();
         expr.stack.unshift(new Token({ type: 'operand', operator: 'constant', value: Math.PI }));
         expr.stack.unshift(new Token({ type: 'binary', operator: 'plus' }));
         expr.stack.unshift(new Token({ type: 'binary', operator: 'plus' }));
         expect(expr.stack).to.have.length(3);
-        expect(expr.reduce()).to.equal(false);
+        expect(() => expr.reduce()).to.throw('Expected an operand');
       });
       it('combines the two operands and operator, adds the combination to the end of the stack, and returns true', () => {
         const expr = new ExpressionParser();
