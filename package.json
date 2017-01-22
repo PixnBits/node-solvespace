@@ -1,6 +1,6 @@
 {
   "name": "solvespace",
-  "version": "0.1.0-pre",
+  "version": "0.1.1",
   "description": "Port (attempt) of SolveSpace https://github.com/solvespace/solvespace",
   "main": "lib/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "test": "npm run test:lint && npm run test:unit && npm run test:functional"
   },
   "author": "pixnbits",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^3.12.2",
@@ -36,5 +36,9 @@
   "bugs": {
     "url": "https://github.com/PixnBits/node-solvespace/issues"
   },
-  "homepage": "https://github.com/PixnBits/node-solvespace#readme"
+  "homepage": "https://github.com/PixnBits/node-solvespace#readme",
+  "keywords": [
+    "parametric",
+    "geometry"
+  ]
 }
