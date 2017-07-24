@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const Expression = require('../../lib/Expression');
+const Expression = require('../lib/Expression');
 
 describe('Expression', () => {
   describe('constants', () => {
@@ -124,6 +124,64 @@ describe('Expression', () => {
     });
     it('missing parentheses', () => {
       expect(() => new Expression('( 2 + 2')).to.throw('Expected ")"');
+    });
+  });
+  describe('building functions', () => {
+    it('plus', () => {
+      const expr = new Expression(3).plus(new Expression(5));
+      expect(expr).to.deep.equal(new Expression('3 + 5'));
+      expect(expr.eval()).to.equal(3 + 5);
+    });
+    it('minus', () => {
+      const expr = new Expression(3).minus(new Expression(5));
+      expect(expr).to.deep.equal(new Expression('3 - 5'));
+      expect(expr.eval()).to.equal(3 - 5);
+    });
+    it('times', () => {
+      const expr = new Expression(3).times(new Expression(5));
+      expect(expr).to.deep.equal(new Expression('3 * 5'));
+      expect(expr.eval()).to.equal(3 * 5);
+    });
+    it('div', () => {
+      const expr = new Expression(3).div(new Expression(5));
+      // expect(expr).to.deep.equal(new Expression('3 / 5'));
+      expect(expr.eval()).to.equal(3 / 5);
+    });
+    it('negate', () => {
+      const expr = new Expression(3).negate();
+      expect(expr).to.deep.equal(new Expression('-3'));
+      expect(expr.eval()).to.equal(-3);
+    });
+    it('sqrt', () => {
+      const expr = new Expression(3).sqrt();
+      expect(expr).to.deep.equal(new Expression('sqrt(3)'));
+      expect(expr.eval()).to.equal(Math.sqrt(3));
+    });
+    it('square', () => {
+      const expr = new Expression(3).square();
+      // expect(expr).to.deep.equal(new Expression('square(3)'));
+      // expect(expr).to.deep.equal(new Expression('3 * 3'));
+      expect(expr.eval()).to.equal(3 * 3);
+    });
+    it('sin', () => {
+      const expr = new Expression(Math.PI / 2).sin();
+      // expect(expr).to.deep.equal(new Expression(`sin(${Math.PI / 2})`));
+      expect(expr.eval()).to.equal(1);
+    });
+    it('cos', () => {
+      const expr = new Expression(Math.PI).cos();
+      // expect(expr).to.deep.equal(new Expression(`cos(${Math.PI})`));
+      expect(expr.eval()).to.equal(-1);
+    });
+    it('asin', () => {
+      const expr = new Expression(0).asin();
+      // expect(expr).to.deep.equal(new Expression('asin(0)'));
+      expect(expr.eval()).to.equal(0);
+    });
+    it('acos', () => {
+      const expr = new Expression(-1).acos();
+      // expect(expr).to.deep.equal(new Expression('acos(-1)'));
+      expect(expr.eval()).to.equal(Math.PI);
     });
   });
 });

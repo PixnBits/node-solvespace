@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 
-const Vector = require('../../lib/Vector');
+const Vector = require('../lib/Vector');
 
 describe('Vector', () => {
   describe('constructor/from', () => {
@@ -115,25 +115,25 @@ describe('Vector', () => {
       const v2 = new Vector(11, 13, 17);
       const crossed = v1.cross(v2);
 
-      expect(crossed.x).to.equal(5 * 17 - 7 * 13);
-      expect(crossed.y).to.equal(7 * 11 - 3 * 17);
-      expect(crossed.z).to.equal(3 * 13 - 5 * 11);
+      expect(crossed.x).to.equal((5 * 17) - (7 * 13));
+      expect(crossed.y).to.equal((7 * 11) - (3 * 17));
+      expect(crossed.z).to.equal((3 * 13) - (5 * 11));
     });
   });
   it('directionCosineWith', () => {
-    expect((new Vector(1, 0, 0)).directionCosineWith(new Vector (1, 0, 0))).to.equal(1);
-    expect((new Vector(0, 1, 0)).directionCosineWith(new Vector (0, 1, 0))).to.equal(1);
-    expect((new Vector(0, 0, 1)).directionCosineWith(new Vector (0, 0, 1))).to.equal(1);
-    expect((new Vector(5, 0, 0)).directionCosineWith(new Vector (3, 0, 0))).to.equal(1);
+    expect((new Vector(1, 0, 0)).directionCosineWith(new Vector(1, 0, 0))).to.equal(1);
+    expect((new Vector(0, 1, 0)).directionCosineWith(new Vector(0, 1, 0))).to.equal(1);
+    expect((new Vector(0, 0, 1)).directionCosineWith(new Vector(0, 0, 1))).to.equal(1);
+    expect((new Vector(5, 0, 0)).directionCosineWith(new Vector(3, 0, 0))).to.equal(1);
   });
   describe('dot', () => {
     it('returns the number of the dot product', () => {
       const v1 = new Vector(3, 5, 7);
       const v2 = new Vector(11, 13, 17);
       expect(v1.dot(v2)).to.equal(
-        3 * 11 +
-        5 * 13 +
-        7 * 17
+        (3 * 11) +
+        (5 * 13) +
+        (7 * 17)
       );
     });
   });
@@ -177,9 +177,9 @@ describe('Vector', () => {
     const v = new Vector(19, 23, 29);
     const n = new Vector(31, 37, 41);
     const dotted = a.dotInToCsys(u, v, n);
-    expect(dotted.x).to.equal(3 * 11 + 5 * 13 + 7 * 17);
-    expect(dotted.y).to.equal(3 * 19 + 5 * 23 + 7 * 29);
-    expect(dotted.z).to.equal(3 * 31 + 5 * 37 + 7 * 41);
+    expect(dotted.x).to.equal((3 * 11) + (5 * 13) + (7 * 17));
+    expect(dotted.y).to.equal((3 * 19) + (5 * 23) + (7 * 29));
+    expect(dotted.z).to.equal((3 * 31) + (5 * 37) + (7 * 41));
   });
   it('scaleOutOfCsys');
   it('dotInToCsys');

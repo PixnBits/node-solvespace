@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 
-const BBox = require('../../lib/BBox');
-const Vector = require('../../lib/Vector');
+const BBox = require('../lib/BBox');
+const Vector = require('../lib/Vector');
 
 describe('BBox', () => {
   it('constructor');

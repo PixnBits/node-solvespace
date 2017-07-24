@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 
-const ExpressionParser = require('../../lib/ExpressionParser');
-const Token = require('../../lib/Token');
+const ExpressionParser = require('../lib/ExpressionParser');
+const Token = require('../lib/Token');
 
 describe('ExpressionParser', () => {
   it('reads', () => {
@@ -336,7 +336,6 @@ describe('ExpressionParser', () => {
         expect(token.expression).to.have.property('a');
         expect(token.expression.a).to.have.property('operator', 'constant');
         expect(token.expression.a).to.have.property('value', 2);
-        expect(token.expression).to.have.property('b', undefined);
       });
       it('adds a sqrt expression to the stack');
       it('adds a square expression to the stack');
