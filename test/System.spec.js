@@ -1,9 +1,10 @@
-// const expect = require('chai').expect;
+const expect = require('chai').expect;
 
 const System = require('../lib/System');
 
 const Expression = require('../lib/Expression');
 const Equation = require('../lib/Equation');
+const Param = require('../lib/Param');
 
 describe('System', () => {
   it('constructor');
@@ -15,35 +16,34 @@ describe('System', () => {
   it('evalJacobian');
   it('writeEquationsExceptFor');
   it('findWhichToRemoveToFixJacobian');
-  it('solveBySubstitution');
-  it('isDragged');
-  it('newtonSolve');
-  it('markParamsFree');
-  describe('solve', () => {
-    it('one simple equations', () => {
-      // const system = new System({
-      //   equations: [
-      //     new Equation({
-      //       tag: 0,
-      //       expression: new Expression('2 + 2'),
-      //     }),
-      //   ],
-      // });
+  describe('solveBySubstitution', () => {
+    it('one simple equation', () => {
       const system = new System();
-      system.equations.set(
-        'idk',
+      const pA = new Param();
+      const pB = new Param();
+      system.params.addAndAssignId(pA);
+      system.params.addAndAssignId(pB);
+      const expression = new Expression(pB.h).minus(new Expression(pA.h));
+      system.equations.addAndAssignId(
         new Equation({
-          tag: 0,
-          expression: new Expression('a - b'),
+          expression,
         })
       );
 
       system.solveBySubstitution();
-      console.log(system);
-      console.log(system.mat.A);
-      // system.solve();
+      // console.log(system.equations.elem[1]);
+      // console.log(system.equations.elem[1].e);
+      // console.log(system.mat.A);
+
+      expect(system.equations.elem[1]).to.have.property('tag', 'eq-substituted');
+      expect(system.equations.elem[1].e.a).to.have.property('parh', pA.h);
+      expect(system.equations.elem[1].e.b).to.have.property('parh', pA.h);
     });
   });
+  it('isDragged');
+  it('newtonSolve');
+  it('markParamsFree');
+  it('solve');
   it('solveRank');
   it('clear');
 });

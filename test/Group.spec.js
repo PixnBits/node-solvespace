@@ -1,6 +1,6 @@
-const expect = require('chai').expect;
+// const expect = require('chai').expect;
 
-const Group = require('../lib/Group');
+// const Group = require('../lib/Group');
 
 describe('Group', () => {
   it('activate');

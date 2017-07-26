@@ -1,27 +1,30 @@
 const expect = require('chai').expect;
 
 const Param = require('../lib/Param');
+const HParam = require('../lib/HParam');
 
 describe('Param', () => {
   describe('constructor', () => {
     it('allows for valid values', () => {
+      const hParam = new HParam(12);
+      const substd = new HParam(19);
       const p = new Param({
         tag: 1e6,
-        hParam: 'no-idea-what-this-is-or-what-its-used-for',
+        hParam,
         val: 6e2,
         known: true,
         free: false,
-        substd: 'C-is-different-than-my-world',
+        substd,
         notSupported: true,
       });
 
       expect(p).to.be.instanceOf(Param);
       expect(p).to.have.property('tag', 1e6);
-      expect(p).to.have.property('h', 'no-idea-what-this-is-or-what-its-used-for');
+      expect(p).to.have.property('h', hParam);
       expect(p).to.have.property('val', 6e2);
       expect(p).to.have.property('known', true);
       expect(p).to.have.property('free', false);
-      expect(p).to.have.property('substd', 'C-is-different-than-my-world');
+      expect(p).to.have.property('substd', substd);
       expect(p).to.not.have.property('notSupported');
     });
     it('ignores wrong types', () => {

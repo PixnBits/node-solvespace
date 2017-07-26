@@ -6,12 +6,11 @@ Variable Decoding
 
 ### Encountered
 * `SK`: Sketch (`src/solvescpace.cpp:11`)
+
+### Potentials
 * `SS`: SolveSpaceUI (`src/solvespace.cpp:10`)
   * `SS.GW`: GraphicsWindow (`src/solvespace.h:623` `src/platform/gtkmain.cpp:577` `src/platform/cocoamain.mm:443`)
   * `SS.TW`: TextWindow (`src/solvespace.h:622`)
-* `hWhatever`:  handles are a 32-bit ID, that is used to represent some data structure in the sketch. (`src/sketch.h:51`)
-
-### Potentials
 
 Program Flow
 -------------
@@ -39,8 +38,7 @@ Program Flow
       * active workplane
       * sets request type from argument
       * `SK.request.AddAndAssignId(&r);`
-      *
-      ```
+      * ```
       // We must regenerate the parameters, so that the code that tries to
       // place this request's entities where the mouse is can do so. But
       // we mustn't try to solve until reasonable values have been supplied
