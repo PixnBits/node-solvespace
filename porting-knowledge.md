@@ -16,6 +16,7 @@ Variable Decoding
 Program Flow
 -------------
 
+* as a library: `Slvs_Solve` ([`src/lib.cpp`](https://github.com/solvespace/solvespace/blob/bb2cc4aa568e7206bdc2d02cb3e0eb8b8d3364c5/src/lib.cpp#L81-L259))
 * Loading a file: `SolveSpaceUI::LoadFromFile` (`src/file.cpp:429`)
   ```
   ClearExisting();

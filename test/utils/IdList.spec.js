@@ -30,15 +30,18 @@ describe('utils', () => {
       expect(l.maximumId()).to.equal(0);
 
       l.addAndAssignId(new T());
+      expect(l.maximumId()).to.equal(0);
+      l.addAndAssignId(new T());
       expect(l.maximumId()).to.be.greaterThan(0);
       expect(l.maximumId()).to.equal(1);
     });
     it('addAndAssignId', () => {
       const l = new IdList(T, H);
-      const t = new T();
 
-      const h = l.addAndAssignId(t);
-      expect(h.v).to.equal(1);
+      const h0 = l.addAndAssignId(new T());
+      expect(h0.v).to.equal(0);
+      const h1 = l.addAndAssignId(new T());
+      expect(h1.v).to.equal(1);
     });
     it('reserveMore', () => {
       const l = new IdList(T, H);
@@ -86,19 +89,20 @@ describe('utils', () => {
     it('indexOf', () => {
       const l = new IdList(T, H);
       const t1 = new T();
+      const t2 = new T();
+      t2.h.v = 10;
+      const t3 = new T();
 
       expect(() => l.indexOf(t1.h)).to.throw();
-      t1.h.v = 10;
-      expect(l.indexOf(t1.h)).to.equal(-1);
+      expect(l.indexOf(t2.h)).to.equal(-1);
 
       l.addAndAssignId(t1);
-      const t2 = new T();
-      l.addAndAssignId(t2);
-      const t3 = new T();
+      l.add(t2);
       l.addAndAssignId(t3);
 
-      const index = l.indexOf(t1.h);
-      expect(index).to.equal(1);
+      expect(l.indexOf(t1.h)).to.equal(0);
+      expect(l.indexOf(t2.h)).to.equal(10);
+      expect(l.indexOf(t3.h)).to.equal(11);
     });
     it('findByIdNoOops', () => {
       const l = new IdList(T, H);
@@ -265,7 +269,7 @@ describe('utils', () => {
       expect(lf.elemsAllocated).to.equal(0);
       expect(lt.elem).to.have.property(t1.h.v, t1);
       expect(lt.elem).to.have.property(t2.h.v, t2);
-      expect(lt.n).to.equal(2);
+      expect(lt.n).to.equal(1);
       expect(lt.elemsAllocated).to.equal(64);
     });
     it('deepCopyInto');
