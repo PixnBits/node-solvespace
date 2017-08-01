@@ -6,6 +6,11 @@ const Expression = require('../lib/Expression');
 const Equation = require('../lib/Equation');
 const Param = require('../lib/Param');
 const Group = require('../lib/Group');
+const HGroup = require('../lib/HGroup');
+const Constraint = require('../lib/Constraint');
+const Entity = require('../lib/Entity');
+const Request = require('../lib/Request');
+const Sketch = require('../lib/Sketch');
 
 describe('System', () => {
   it('constructor');
@@ -52,12 +57,12 @@ describe('System', () => {
       system.params.addAndAssignId(pA);
       system.params.addAndAssignId(pB);
 
-      // TODO: figure out what this params are for and why we have to add them
-      // redundant? should they be params from the system?
-      // did I get the system and sketch parent-child relationship backwards?
-      system.sketch.params.addAndAssignId(new Param());
-      // why 2 instead of 1?
-      system.sketch.params.addAndAssignId(new Param());
+      // // TODO: figure out what this params are for and why we have to add them
+      // // redundant? should they be params from the system?
+      // // did I get the system and sketch parent-child relationship backwards?
+      // system.sketch.params.addAndAssignId(new Param());
+      // // why 2 instead of 1?
+      // system.sketch.params.addAndAssignId(new Param());
 
       const expression = new Expression(pB.h).minus(new Expression(pA.h));
       system.equations.addAndAssignId(
@@ -79,18 +84,25 @@ describe('System', () => {
                         .minus(new Expression(pE.h)),
         })
       );
-      system.sketch.params.addAndAssignId(new Param());
-      system.sketch.params.addAndAssignId(new Param());
-      system.sketch.params.addAndAssignId(new Param());
+      // system.sketch.params.addAndAssignId(new Param());
+      // system.sketch.params.addAndAssignId(new Param());
+      // system.sketch.params.addAndAssignId(new Param());
 
       // TODO: understand these arguments
+      const sketch = new Sketch();
+      sketch.params.add(pA);
+      sketch.params.add(pB);
+      sketch.params.add(pC);
+      sketch.params.add(pD);
+      sketch.params.add(pE);
+
       const g = new Group();
       const dof = null;
       const bad = [];
       const andFindBad = true;
       const andFindFree = true;
       const forceDofCheck = true;
-      const solveReport = system.solve(g, dof, bad, andFindBad, andFindFree, forceDofCheck);
+      const solveReport = system.solve(sketch, g, dof, bad, andFindBad, andFindFree, forceDofCheck);
       expect(solveReport).to.equal('redundant-okay');
       expect(system.mat.X).to.have.property('0', 0);
       expect(system.mat.X).to.have.property('1', 0);

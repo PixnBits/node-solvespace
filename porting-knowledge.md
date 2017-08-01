@@ -8,6 +8,7 @@ Variable Decoding
 * `SK`: Sketch (`src/solvescpace.cpp:11`)
 * `SS`: SolveSpaceUI (`src/solvespace.cpp:10`)
   * `SS.GW`: GraphicsWindow (`src/solvespace.h:623` `src/platform/gtkmain.cpp:577` `src/platform/cocoamain.mm:443`)
+    * `SS.GW.gs` (`src/ui.h:798`)
   * `SS.TW`: TextWindow (`src/solvespace.h:622`)
 * `hWhatever`:  handles are a 32-bit ID, that is used to represent some data structure in the sketch. (`src/sketch.h:51`)
 
