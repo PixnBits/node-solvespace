@@ -3,111 +3,67 @@ const expect = require('chai').expect;
 const System = require('../lib/System');
 
 const Expression = require('../lib/Expression');
-const Equation = require('../lib/Equation');
 const Param = require('../lib/Param');
-const Group = require('../lib/Group');
-const HGroup = require('../lib/HGroup');
-const Constraint = require('../lib/Constraint');
-const Entity = require('../lib/Entity');
-const Request = require('../lib/Request');
-const Sketch = require('../lib/Sketch');
 
-describe('System', () => {
-  it('constructor');
-  it('calculateRank');
-  it('testRank');
-  it('solveLinearSystem');
-  it('solveLeastSquares');
-  it('writeJacobian');
-  it('evalJacobian');
-  it('writeEquationsExceptFor');
-  it('findWhichToRemoveToFixJacobian');
-  describe('solveBySubstitution', () => {
-    it('one simple equation', () => {
-      const system = new System();
-      const pA = new Param();
-      const pB = new Param();
-      system.params.addAndAssignId(pA);
-      system.params.addAndAssignId(pB);
-      const expression = new Expression(pB.h).minus(new Expression(pA.h));
-      system.equations.addAndAssignId(
-        new Equation({
-          expression,
-        })
-      );
+describe('MySystem', () => {
+  var system;
 
-      system.solveBySubstitution();
-      // console.log(system.equations.elem[0]);
-      // console.log(system.equations.elem[0].e);
-      // console.log(system.mat);
-
-      expect(system.equations.elem[0]).to.have.property('tag', 'eq-substituted');
-      expect(system.equations.elem[0].e.a).to.have.property('parh', pA.h);
-      expect(system.equations.elem[0].e.b).to.have.property('parh', pA.h);
-    });
+  beforeEach(() => {
+    system = new System();
   });
-  it('isDragged');
-  it('newtonSolve');
-  it('markParamsFree');
+
   describe('solve', () => {
-    it('simple subtractions with no unknowns', () => {
-      const system = new System();
-      const pA = new Param({ val: 7 });
-      const pB = new Param({ val: 7 });
-      system.params.addAndAssignId(pA);
-      system.params.addAndAssignId(pB);
-
-      // // TODO: figure out what this params are for and why we have to add them
-      // // redundant? should they be params from the system?
-      // // did I get the system and sketch parent-child relationship backwards?
-      // system.sketch.params.addAndAssignId(new Param());
-      // // why 2 instead of 1?
-      // system.sketch.params.addAndAssignId(new Param());
-
-      const expression = new Expression(pB.h).minus(new Expression(pA.h));
-      system.equations.addAndAssignId(
-        new Equation({
-          expression,
-        })
-      );
-
-      const pC = new Param({ val: 23 });
-      const pD = new Param({ val: 41 });
-      const pE = new Param({ val: 41 - 23 });
-      system.params.addAndAssignId(pC);
-      system.params.addAndAssignId(pD);
-      system.params.addAndAssignId(pE);
-      system.equations.addAndAssignId(
-        new Equation({
-          expression: new Expression(pD.h)
-                        .minus(new Expression(pC.h))
-                        .minus(new Expression(pE.h)),
-        })
-      );
-      // system.sketch.params.addAndAssignId(new Param());
-      // system.sketch.params.addAndAssignId(new Param());
-      // system.sketch.params.addAndAssignId(new Param());
-
-      // TODO: understand these arguments
-      const sketch = new Sketch();
-      sketch.params.add(pA);
-      sketch.params.add(pB);
-      sketch.params.add(pC);
-      sketch.params.add(pD);
-      sketch.params.add(pE);
-
-      const g = new Group();
-      const dof = null;
-      const bad = [];
-      const andFindBad = true;
-      const andFindFree = true;
-      const forceDofCheck = true;
-      const solveReport = system.solve(sketch, g, dof, bad, andFindBad, andFindFree, forceDofCheck);
-      expect(solveReport).to.equal('redundant-okay');
-      expect(system.mat.X).to.have.property('0', 0);
-      expect(system.mat.X).to.have.property('1', 0);
+    it('can solve a simple subtraction', () => {
+      const param = new Param({ value: 3 });
+      system.addExpression(new Expression(param).minus(new Expression(5)));
+      expect(system.params).to.have.property('length', 1);
+      expect(system.equations).to.have.property('length', 1);
+      system.solve();
+      expect(system.params[0]).to.equal(param);
+      expect(system.params[0].value).to.equal(5);
+    });
+    it('can solve two subtraction expressions', () => {
+      const paramA = new Param({ value: 3 });
+      system.addExpression(new Expression(paramA).minus(new Expression(5)));
+      const paramB = new Param({ value: 1 });
+      system.addExpression(new Expression(paramB).minus(new Expression(7)));
+      expect(system.params).to.have.property('length', 2);
+      expect(system.equations).to.have.property('length', 2);
+      system.solve();
+      expect(system.params[0]).to.equal(paramA);
+      expect(system.params[1]).to.equal(paramB);
+      expect(system.params[0].value).to.equal(5);
+      expect(system.params[1].value).to.equal(7);
+    });
+    it('can solve four linear arithmetic expressions', () => {
+      const paramPlus = new Param({ value: 1 });
+      system.addExpression(new Expression(paramPlus).plus(new Expression(-3)));
+      const paramMinus = new Param({ value: 1 });
+      system.addExpression(new Expression(paramMinus).minus(new Expression(5)));
+      const paramTimes = new Param({ value: 1 });
+      system.addExpression(new Expression(paramTimes).times(new Expression(7)));
+      const paramDiv = new Param({ value: 1 });
+      system.addExpression(new Expression(paramDiv).div(new Expression(11)));
+      expect(system.params).to.have.property('length', 4);
+      expect(system.equations).to.have.property('length', 4);
+      system.solve();
+      expect(system.params[0]).to.equal(paramPlus);
+      expect(system.params[0].value).to.equal(3);
+      expect(system.params[1]).to.equal(paramMinus);
+      expect(system.params[1].value).to.equal(5);
+      expect(system.params[2]).to.equal(paramTimes);
+      expect(system.params[2].value).to.equal(0);
+      expect(system.params[3]).to.equal(paramDiv);
+      expect(system.params[3].value).to.equal(0);
+    });
+    it('can solve a square expression', () => {
+      const param = new Param({ value: 1 });
+      system.addExpression(new Expression(param).square().minus(new Expression(49)));
+      expect(system.equations).to.have.property('length', 1);
+      expect(system.params).to.have.property('length', 1);
+      system.solve();
+      expect(system.params[0]).to.equal(param);
+      expect(system.params[0].value).to.be.closeTo(7, 1e-15);
     });
   });
-  it('solveRank');
-  it('clear');
 });

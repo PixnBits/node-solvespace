@@ -37,5 +37,6 @@ module.exports = {
       property: 'pow',
       message: 'Use the exponentiation operator (**) instead.',
     }*/],
+    'no-param-reassign': 1,
   }
 };
