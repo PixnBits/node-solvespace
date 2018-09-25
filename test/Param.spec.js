@@ -1,5 +1,3 @@
-const expect = require('chai').expect;
-
 const Param = require('../lib/Param');
 
 describe('Param', () => {
@@ -13,13 +11,14 @@ describe('Param', () => {
         notSupported: true,
       });
 
-      expect(p).to.be.instanceOf(Param);
-      expect(p).to.have.property('tag', 1e6);
-      expect(p).to.have.property('value', 6e2);
-      expect(p).to.have.property('known', true);
-      expect(p).to.have.property('free', false);
-      expect(p).to.not.have.property('notSupported');
+      expect(p).toBeInstanceOf(Param);
+      expect(p).toHaveProperty('tag', 1e6);
+      expect(p).toHaveProperty('value', 6e2);
+      expect(p).toHaveProperty('known', true);
+      expect(p).toHaveProperty('free', false);
+      expect(p).not.toHaveProperty('notSupported');
     });
+
     it('ignores wrong types', () => {
       const p = new Param({
         tag: 'youre it!',
@@ -28,16 +27,16 @@ describe('Param', () => {
         free: 0,
       });
 
-      expect(p).to.be.instanceOf(Param);
-      expect(p).to.not.have.property('tag');
-      expect(p).to.not.have.property('value');
-      expect(p).to.not.have.property('known');
-      expect(p).to.not.have.property('free');
+      expect(p).toBeInstanceOf(Param);
+      expect(p).not.toHaveProperty('tag');
+      expect(p).not.toHaveProperty('value');
+      expect(p).not.toHaveProperty('known');
+      expect(p).not.toHaveProperty('free');
     });
+
     it('allows no options, though pointless', () => {
       const p = new Param();
-
-      expect(p).to.be.instanceOf(Param);
+      expect(p).toBeInstanceOf(Param);
     });
   });
 });

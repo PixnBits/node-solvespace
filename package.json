@@ -4,19 +4,18 @@
   "description": "Port (attempt) of SolveSpace https://github.com/solvespace/solvespace",
   "main": "lib/index.js",
   "scripts": {
-    "test:lint": "eslint --ext .js ./",
-    "test:spec": "mocha \"test/**/*.spec.js\"",
-    "test": "npm run test:spec && npm run test:lint"
+    "lint": "eslint --ext .js ./",
+    "test": "jest",
+    "posttest": "npm run lint"
   },
   "author": "pixnbits",
   "license": "GPL-3.0",
   "devDependencies": {
-    "chai": "^3.5.0",
     "eslint": "^3.12.2",
     "eslint-config-airbnb-base": "^11.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-let-and-var": "^0.2.3",
-    "mocha": "^3.2.0"
+    "jest": "^23.6.0"
   },
   "dependencies": {
     "debug": "^2.6.0",
@@ -40,5 +39,8 @@
   "keywords": [
     "parametric",
     "geometry"
-  ]
+  ],
+  "jest": {
+    "testEnvironment": "node"
+  }
 }
