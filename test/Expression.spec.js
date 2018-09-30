@@ -182,4 +182,58 @@ describe('Expression', () => {
       expect(expr.eval()).toEqual(Math.PI);
     });
   });
+  describe('toString', () => {
+    it('prints param expressions', () => {
+      const Param = require('../lib/Param');
+      const expr = new Expression(new Param({ value: 4 }));
+      expect(`${expr}`).toMatchSnapshot();
+    });
+    it('prints constant expressions', () => {
+      expect(`${new Expression(42)}`).toMatchSnapshot();
+    });
+    it('prints minus expressions', () => {
+      const expr = new Expression(4).minus(2);
+      expect(`${expr}`).toMatchSnapshot();
+    });
+    it('prints times expressions', () => {
+      const expr = new Expression(4).times(2);
+      expect(`${expr}`).toMatchSnapshot();
+    });
+    it('prints div expressions', () => {
+      const expr = new Expression(4).div(2);
+      expect(`${expr}`).toMatchSnapshot();
+    });
+    it('prints plus expressions', () => {
+      const expr = new Expression(4).plus(2);
+      expect(`${expr}`).toMatchSnapshot();
+    });
+    it('prints sqrt expressions', () => {
+      const expr = new Expression(4).sqrt();
+      expect(`${expr}`).toMatchSnapshot();
+    });
+    it('prints square expressions', () => {
+      const expr = new Expression(4).square();
+      expect(`${expr}`).toMatchSnapshot();
+    });
+    it('prints negate expressions', () => {
+      const expr = new Expression(4).negate();
+      expect(`${expr}`).toMatchSnapshot();
+    });
+    it('prints sin expressions', () => {
+      const expr = new Expression(4).sin();
+      expect(`${expr}`).toMatchSnapshot();
+    });
+    it('prints cos expressions', () => {
+      const expr = new Expression(4).cos();
+      expect(`${expr}`).toMatchSnapshot();
+    });
+    it('prints asin expressions', () => {
+      const expr = new Expression(4).asin();
+      expect(`${expr}`).toMatchSnapshot();
+    });
+    it('prints acos expressions', () => {
+      const expr = new Expression(4).acos();
+      expect(`${expr}`).toMatchSnapshot();
+    });
+  });
 });

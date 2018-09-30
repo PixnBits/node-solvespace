@@ -3,6 +3,6 @@
     "jest": true
   },
   "rules": {
-    "no-unused-expressions": 1
+    "global-require": 1
   }
 }

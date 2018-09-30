@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Expression toString prints acos expressions 1`] = `"(acos 4)"`;
+
+exports[`Expression toString prints asin expressions 1`] = `"(asin 4)"`;
+
+exports[`Expression toString prints constant expressions 1`] = `"42"`;
+
+exports[`Expression toString prints cos expressions 1`] = `"(cos 4)"`;
+
+exports[`Expression toString prints div expressions 1`] = `"(4 / 2)"`;
+
+exports[`Expression toString prints minus expressions 1`] = `"(4 - 2)"`;
+
+exports[`Expression toString prints negate expressions 1`] = `"(- 4)"`;
+
+exports[`Expression toString prints param expressions 1`] = `"param(4)"`;
+
+exports[`Expression toString prints plus expressions 1`] = `"(4 + 2)"`;
+
+exports[`Expression toString prints sin expressions 1`] = `"(sin 4)"`;
+
+exports[`Expression toString prints sqrt expressions 1`] = `"(sqrt 4)"`;
+
+exports[`Expression toString prints square expressions 1`] = `"(square 4)"`;
+
+exports[`Expression toString prints times expressions 1`] = `"(4 * 2)"`;
