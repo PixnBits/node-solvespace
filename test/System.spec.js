@@ -3,7 +3,7 @@ const System = require('../lib/System');
 const Expression = require('../lib/Expression');
 const Param = require('../lib/Param');
 
-describe('MySystem', () => {
+describe('System', () => {
   var system;
 
   beforeEach(() => {
@@ -87,7 +87,7 @@ describe('MySystem', () => {
       expect(y.value).toBeCloseTo(6, 1e-15);
     });
 
-    it.only('can solve a line intersecting a circle', () => {
+    it('can solve a line intersecting a circle', () => {
       const x = new Param({ value: 1 });
       const y = new Param({ value: 1 });
 
