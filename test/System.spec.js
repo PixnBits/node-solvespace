@@ -59,12 +59,51 @@ describe('MySystem', () => {
 
     it('can solve a square expression', () => {
       const param = new Param({ value: 1 });
+      // 0 = p^2 - 7^2
       system.addExpression(new Expression(param).square().minus(new Expression(49)));
       expect(system.equations).toHaveProperty('length', 1);
       expect(system.params).toHaveProperty('length', 1);
       system.solve();
       expect(system.params[0]).toEqual(param);
       expect(system.params[0].value).toBeCloseTo(7, 1e-15);
+    });
+
+    it('can solve two intersecting lines', () => {
+      const x = new Param({ value: 1 });
+      const y = new Param({ value: 1 });
+
+      const m1 = new Expression(2);
+      const b1 = new Expression(-2);
+      // 2*x - 2 = y (2*4-2=8-2=6)
+      system.addExpression(m1.times(x).plus(b1).minus(y));
+
+      const m2 = new Expression(-3);
+      const b2 = new Expression(18);
+      // -3*x + 18 = y (-3*4+18=-12+18=6)
+      system.addExpression(m2.times(x).plus(b2).minus(y));
+
+      system.solve();
+      expect(x.value).toBeCloseTo(4, 1e-15);
+      expect(y.value).toBeCloseTo(6, 1e-15);
+    });
+
+    it.only('can solve a line intersecting a circle', () => {
+      const x = new Param({ value: 1 });
+      const y = new Param({ value: 1 });
+
+      // simple circle radius 3 centered at (0, 0)
+      system.addExpression(
+        new Expression(3).square()
+          .minus(new Expression(x).square())
+          .minus(new Expression(y).square())
+      );
+
+      // simple line y = x
+      system.addExpression(new Expression(x).minus(new Expression(y)));
+
+      system.solve();
+      expect(x.value).toBeCloseTo(y.value, 1e-15);
+      expect(y.value).toBeCloseTo(Math.sqrt(Math.pow(3, 2) / 2), 1e-15);
     });
   });
 });
