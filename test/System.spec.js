@@ -105,5 +105,51 @@ describe('System', () => {
       expect(x.value).toBeCloseTo(y.value, 1e-15);
       expect(y.value).toBeCloseTo(Math.sqrt(Math.pow(3, 2) / 2), 1e-15);
     });
+
+    it('can solve a rectangle with a pixed point, vert and horiz lines, and width & height', () => {
+      /*
+      b (3,0)  c(5,3)
+      +----------+
+      |          |
+      |          |
+      +----------+
+      a (0,0)  d(5,0)
+      */
+      const ax = new Expression(0);
+      const ay = new Expression(0);
+
+      const bx = new Param({ value: -1 });
+      const by = new Param({ value: 1 });
+
+      const cx = new Param({ value: 2 });
+      const cy = new Param({ value: 2 });
+
+      const dx = new Param({ value: 1 });
+      const dy = new Param({ value: -1 });
+
+      const width = new Expression(5);
+      const height = new Expression(3);
+
+      // vertical lines
+      system.addExpression(ax.minus(bx));
+      system.addExpression(new Expression(dx).minus(cx));
+      // horizontal lines
+      system.addExpression(new Expression(ay).minus(dy));
+      system.addExpression(new Expression(by).minus(cy));
+      // line widths
+      system.addExpression(new Expression(by).minus(ay).minus(height));
+      system.addExpression(new Expression(cx).minus(bx).minus(width));
+
+      system.solve();
+
+      expect(bx.value).toBeCloseTo(0, 1e-15);
+      expect(by.value).toBeCloseTo(3, 1e-15);
+
+      expect(cx.value).toBeCloseTo(5, 1e-15);
+      expect(cy.value).toBeCloseTo(3, 1e-15);
+
+      expect(dx.value).toBeCloseTo(5, 1e-15);
+      expect(dy.value).toBeCloseTo(0, 1e-15);
+    });
   });
 });
