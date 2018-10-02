@@ -151,5 +151,88 @@ describe('System', () => {
       expect(dx.value).toBeCloseTo(5, 1e-15);
       expect(dy.value).toBeCloseTo(0, 1e-15);
     });
+
+    it('can solve a rectangle with a pixed point, 90° angles, and width & height', () => {
+      /*
+      b (3,0)  c(5,3)
+      +----------+
+      |          |
+      |          |
+      +----------+
+      a (0,0)  d(5,0)
+      */
+
+      const ax = new Expression(0);
+      const ay = new Expression(0);
+
+      const bx = new Param({ value: -1 });
+      const by = new Param({ value: 1 });
+
+      const cx = new Param({ value: 2 });
+      const cy = new Param({ value: 2 });
+
+      const dx = new Param({ value: 1 });
+      const dy = new Param({ value: -1 });
+
+      const width = new Expression(5);
+      const height = new Expression(3);
+
+      // line widths
+      system.addExpression(new Expression(by).minus(ay).minus(height));
+      system.addExpression(new Expression(cx).minus(bx).minus(width));
+
+      // 90°
+      // the law of cosines simplifies to pythagorean theorem for right angles
+      // c^2 = a^2 + b^2
+      // a^2 + b^2 - c^2 = 0
+      // c is the distance between the non-shared points, a and b are the lengths of the lines
+      // abc
+      // sqrt((bx-ax)^2+(by-ay)^2)^2 + sqrt((cx-bx)^2+(cy-by)^2)^2 - sqrt((cx-ax)^2+(cy-ay)^2)^2
+      // simplifies down to
+      // ((bx-ax)^2+(by-ay)^2) + ((cx-bx)^2+(cy-by)^2) - ((cx-ax)^2+(cy-ay)^2)
+      const abLengthSquared = (
+        new Expression(bx).minus(ax).square().plus(
+        new Expression(by).minus(ay).square())
+      );
+      const bcLengthSquared = (
+        new Expression(cx).minus(bx).square().plus(
+        new Expression(cy).minus(by).square())
+      );
+      const cdLengthSquared = (
+        new Expression(dx).minus(cx).square().plus(
+        new Expression(dy).minus(cy).square())
+      );
+      const daLengthSquared = (
+        new Expression(ax).minus(dx).square().plus(
+        new Expression(ay).minus(dy).square())
+      );
+      const acLengthSquared = (
+        new Expression(cx).minus(ax).square().plus(
+        new Expression(cy).minus(ay).square())
+      );
+      const bdLengthSquared = (
+        new Expression(dx).minus(bx).square().plus(
+        new Expression(dy).minus(by).square())
+      );
+      // abc
+      system.addExpression(abLengthSquared.plus(bcLengthSquared).minus(acLengthSquared));
+      // bcd
+      system.addExpression(bcLengthSquared.plus(cdLengthSquared).minus(bdLengthSquared));
+      // cda
+      system.addExpression(cdLengthSquared.plus(daLengthSquared).minus(acLengthSquared));
+      // dab
+      system.addExpression(daLengthSquared.plus(abLengthSquared).minus(bdLengthSquared));
+
+      system.solve();
+
+      expect(bx.value).toBeCloseTo(0, 1e-15);
+      expect(by.value).toBeCloseTo(3, 1e-15);
+
+      expect(cx.value).toBeCloseTo(5, 1e-15);
+      expect(cy.value).toBeCloseTo(3, 1e-15);
+
+      expect(dx.value).toBeCloseTo(5, 1e-15);
+      expect(dy.value).toBeCloseTo(0, 1e-15);
+    });
   });
 });
