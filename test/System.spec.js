@@ -223,8 +223,13 @@ describe('System', () => {
       // dab
       system.addExpression(daLengthSquared.plus(abLengthSquared).minus(bdLengthSquared));
 
-      system.solve();
+      console.log(`a (${ax.value}, ${ay.value}), b (${bx.value}, ${by.value}), c (${cx.value}, ${cy.value}), d (${dx.value}, ${dy.value})`);
 
+      try {
+        system.solve();
+      } finally {
+        console.log(`a (${ax.value}, ${ay.value}), b (${bx.value}, ${by.value}), c (${cx.value}, ${cy.value}), d (${dx.value}, ${dy.value})`);
+      }
       expect(bx.value).toBeCloseTo(0, 1e-15);
       expect(by.value).toBeCloseTo(3, 1e-15);
 
